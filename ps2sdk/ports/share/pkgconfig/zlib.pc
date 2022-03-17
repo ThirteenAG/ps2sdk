@@ -1,0 +1,13 @@
+prefix=D:/a/ps2dev/ps2dev/ps2dev/ps2sdk/ports
+exec_prefix=D:/a/ps2dev/ps2dev/ps2dev/ps2sdk/ports
+libdir=D:/a/ps2dev/ps2dev/ps2dev/ps2sdk/ports/lib
+sharedlibdir=D:/a/ps2dev/ps2dev/ps2dev/ps2sdk/ports/lib
+includedir=D:/a/ps2dev/ps2dev/ps2dev/ps2sdk/ports/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.11
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
