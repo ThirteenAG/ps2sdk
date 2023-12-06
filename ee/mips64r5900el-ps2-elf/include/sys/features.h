@@ -320,7 +320,8 @@ extern "C" {
 #endif
 
 #if _FORTIFY_SOURCE > 0 && !defined(__cplusplus) && !defined(__lint__) && \
-   (__OPTIMIZE__ > 0 || defined(__clang__)) && __GNUC_PREREQ__(4, 1)
+   (__OPTIMIZE__ > 0 || defined(__clang__)) && __GNUC_PREREQ__(4, 1) && \
+   !defined(_LIBC)
 #  if _FORTIFY_SOURCE > 1
 #    define __SSP_FORTIFY_LEVEL 2
 #  else
@@ -533,6 +534,7 @@ extern "C" {
 
 #ifdef _MIPS_ARCH_R5900
 # define _POSIX_TIMERS				1
+# define _POSIX_MONOTONIC_CLOCK			200112L
 #endif
 
 #ifdef __cplusplus

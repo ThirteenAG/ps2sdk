@@ -48,6 +48,15 @@ void vector_normalize(VECTOR output, VECTOR input0);
 /** Calculate the outer product of two vectors. */
 void vector_outerproduct(VECTOR output, VECTOR input0, VECTOR input1);
 
+/** Add two vectors */
+void vector_add(VECTOR sum, VECTOR addend, VECTOR summand);
+
+/** Calculate the cross product of two vectors */
+void vector_cross_product(VECTOR product, VECTOR multiplicand, VECTOR multiplier);
+
+/** Calculates the normal of 3 vectors */
+void vector_triangle_normal(VECTOR output, VECTOR a, VECTOR b, VECTOR c);
+
 /* MATRIX FUNCTIONS */
 /** Copy a matrix. */
 void matrix_copy(MATRIX output, MATRIX input0);
@@ -111,7 +120,7 @@ void create_local_screen(MATRIX local_screen, MATRIX local_world, MATRIX world_v
 void calculate_normals(VECTOR *output, int count, VECTOR *normals, MATRIX local_light);
 
 /** Calculate the light intensity for an array of lights given an array of normal values. */
-void calculate_lights(VECTOR *output, int count, VECTOR *normals, VECTOR *light_directions, VECTOR *light_colours, int *light_types, int light_count);
+void calculate_lights(VECTOR *output, int count, VECTOR *normals, VECTOR *light_directions, VECTOR *light_colours, const int *light_types, int light_count);
 
 /** Calculate colour values given an array of light intensity values. */
 void calculate_colours(VECTOR *output, int count, VECTOR *colours, VECTOR *lights);

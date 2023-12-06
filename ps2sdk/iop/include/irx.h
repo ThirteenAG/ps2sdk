@@ -101,6 +101,6 @@ struct irx_export_table _exp_##modname			\
 #define DECLARE_EXPORT(fptr) \
 	__asm__ (".section\t.text\n\t.word\t"STR(fptr));
 
-#define END_EXPORT_TABLE __asm__ (".section\t.text\n\t.word\t0");
+#define END_EXPORT_TABLE  __asm__ (".section\t.text\n\t.word\t0");
 
 #endif /* __IRX_H__ */

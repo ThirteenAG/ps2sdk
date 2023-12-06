@@ -1,69 +1,71 @@
 /*
- *  Written by Joel Sherrill <joel@OARcorp.com>.
+ * Module: sched.h
  *
- *  COPYRIGHT (c) 1989-2010.
- *  On-Line Applications Research Corporation (OAR).
+ * Purpose:
+ *      Provides an implementation of POSIX realtime extensions
+ *      as defined in
  *
- *  Permission to use, copy, modify, and distribute this software for any
- *  purpose without fee is hereby granted, provided that this entire notice
- *  is included in all copies of any software which is or includes a copy
- *  or modification of this software.
+ *              POSIX 1003.1b-1993      (POSIX.1b)
  *
- *  THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
- *  WARRANTY.  IN PARTICULAR,  THE AUTHOR MAKES NO REPRESENTATION
- *  OR WARRANTY OF ANY KIND CONCERNING THE MERCHANTABILITY OF THIS
- *  SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
+ * --------------------------------------------------------------------------
  *
- *  $Id$
+ *      Pthreads-embedded (PTE) - POSIX Threads Library for embedded systems
+ *      Copyright(C) 2008 Jason Schmidlapp
+ *
+ *      Contact Email: jschmidlapp@users.sourceforge.net
+ *
+ *
+ *      Pthreads-embedded (PTE) - POSIX Threads Library for embedded systems
+ *      Copyright(C) 2008 Jason Schmidlapp
+ *
+ *      Contact Email: jschmidlapp@users.sourceforge.net
+ *
+ *
+ *      Based upon Pthreads-win32 - POSIX Threads Library for Win32
+ *      Copyright(C) 1998 John E. Bossom
+ *      Copyright(C) 1999,2005 Pthreads-win32 contributors
+ *
+ *      Contact Email: rpj@callisto.canberra.edu.au
+ *
+ *      The original list of contributors to the Pthreads-win32 project
+ *      is contained in the file CONTRIBUTORS.ptw32 included with the
+ *      source code distribution. The list can also be seen at the
+ *      following World Wide Web location:
+ *      http://sources.redhat.com/pthreads-win32/contributors.html
+ *
+ *      This library is free software; you can redistribute it and/or
+ *      modify it under the terms of the GNU Lesser General Public
+ *      License as published by the Free Software Foundation; either
+ *      version 2 of the License, or (at your option) any later version.
+ *
+ *      This library is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *      Lesser General Public License for more details.
+ *
+ *      You should have received a copy of the GNU Lesser General Public
+ *      License along with this library in the file COPYING.LIB;
+ *      if not, write to the Free Software Foundation, Inc.,
+ *      59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
+#ifndef _SYS_SCHED_H
+#define _SYS_SCHED_H
 
+/* Thread scheduling policies */
 
-#ifndef _SYS_SCHED_H_
-#define _SYS_SCHED_H_
-
-#include <sys/_timespec.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/* Scheduling Policies */
-/* Open Group Specifications Issue 6 */
-#if defined(__CYGWIN__)
-#define SCHED_OTHER    3
-#else
-#define SCHED_OTHER    0
-#endif
-
-#define SCHED_FIFO     1
-#define SCHED_RR       2
-
-#if defined(_POSIX_SPORADIC_SERVER)
-#define SCHED_SPORADIC 4
-#endif
-
-/* Scheduling Parameters */
-/* Open Group Specifications Issue 6 */
-
-struct sched_param {
-  int sched_priority;           /* Process execution scheduling priority */
-
-#if defined(_POSIX_SPORADIC_SERVER) || defined(_POSIX_THREAD_SPORADIC_SERVER)
-  int sched_ss_low_priority;    /* Low scheduling priority for sporadic */
-                                /*   server */
-  struct timespec sched_ss_repl_period;
-                                /* Replenishment period for sporadic server */
-  struct timespec sched_ss_init_budget;
-                               /* Initial budget for sporadic server */
-  int sched_ss_max_repl;       /* Maximum pending replenishments for */
-                               /* sporadic server */
-#endif
+enum
+{
+  SCHED_OTHER = 0,
+  SCHED_FIFO,
+  SCHED_RR,
+  SCHED_MIN   = SCHED_OTHER,
+  SCHED_MAX   = SCHED_RR
 };
 
-#ifdef __cplusplus
-}
-#endif
+struct sched_param
+  {
+    int sched_priority;
+  };
 
-#endif
-/* end of include file */
+#endif                          /* !_SYS_SCHED_H */
 

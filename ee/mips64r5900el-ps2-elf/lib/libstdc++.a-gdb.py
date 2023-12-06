@@ -19,7 +19,7 @@ import gdb
 import os
 import os.path
 
-pythondir = '/d/a/ps2dev/ps2dev/ps2dev/ee/share/gcc-11.2.0/python'
+pythondir = '/d/a/ps2dev/ps2dev/ps2dev/ee/share/gcc-11.3.0/python'
 libdir = '/d/a/ps2dev/ps2dev/ps2dev/ee/mips64r5900el-ps2-elf/lib'
 
 # This file might be loaded when there is no current objfile.  This

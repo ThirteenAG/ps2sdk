@@ -20,248 +20,308 @@
 
 /* File open modes */
 /** Open file for streaming */
-#define SCE_CdSTREAM	0x40000000 
+#define SCE_CdSTREAM 0x40000000
 
-enum SCECdvdSectorType{
-	/* Game CD and DVD sector types.  */
-	SCECdSecS2048=0,
-	SCECdSecS2328,
-	SCECdSecS2340,
+enum SCECdvdSectorType {
+    /* Game CD and DVD sector types.  */
+    SCECdSecS2048 = 0,
+    SCECdSecS2328,
+    SCECdSecS2340,
 
-	/* CDDA sector types.  */
-	SCECdSecS2352=0,
-	SCECdSecS2368,
-	SCECdSecS2448,
+    /* CDDA sector types.  */
+    SCECdSecS2352 = 0,
+    SCECdSecS2368,
+    SCECdSecS2448,
 };
 
-enum SCECdvdSpinValue{
-	/** Spin at maximum speed */
-	SCECdSpinMax=0,	
-	/** Spins at the recommended speed for streaming data */
-	SCECdSpinStm=0,	
-	/** Spins at the DVD layer 0 speed */
-	SCECdSpinDvdDL0=0,
+enum SCECdvdSpinValue {
+    /** Spin at maximum speed */
+    SCECdSpinMax = 0,
+    /** Spins at the recommended speed for streaming data */
+    SCECdSpinStm = 0,
+    /** Spins at the DVD layer 0 speed */
+    SCECdSpinDvdDL0 = 0,
 
-	/** Optimized speed. Starts reading at max speed, slows down as read errors occur. */
-	SCECdSpinNom=1,
-	/** 1x. For CDDA reading. */
-	SCECdSpinX1,
-	//Note: These modes were taken from the PS2Linux libcdvd.h file, and they don't appear in any other Sony libcdvd.h file.
-	/** 2x */
-	SCECdSpinX2,
-	/** 4x */
-	SCECdSpinX4,
-	/** 12x */
-	SCECdSpinX12,
-	/** Optimized speed, based on current speed. */
-	SCECdSpinNm2=10,
-	/** DVD x1.6 CLV */
-	SCECdSpin1p6,
-	/** Spin at maximum speed (Not sure what's the difference between this and SCECdSpinMax) */
-	SCECdSpinMx=20,
+    /** Optimized speed. Starts reading at max speed, slows down as read errors occur. */
+    SCECdSpinNom = 1,
+    /** 1x. For CDDA reading. */
+    SCECdSpinX1,
+    // Note: These modes were taken from the PS2Linux libcdvd.h file, and they don't appear in any other Sony libcdvd.h file.
+    /** 2x */
+    SCECdSpinX2,
+    /** 4x */
+    SCECdSpinX4,
+    /** 12x */
+    SCECdSpinX12,
+    /** Optimized speed, based on current speed. */
+    SCECdSpinNm2 = 10,
+    /** DVD x1.6 CLV */
+    SCECdSpin1p6,
+    /** Spin at maximum speed (Not sure what's the difference between this and SCECdSpinMax) */
+    SCECdSpinMx = 20,
 };
 
-enum SCECdvdMModeMediaType{
-	SCECdMmodeCd=1,
-	SCECdMmodeDvd
+enum SCECdvdMModeMediaType {
+    SCECdMmodeCd = 1,
+    SCECdMmodeDvd
 };
 
-enum SCECdvdErrorCode{
-	/** Can't get error code */
-	SCECdErFAIL	= -1,
-	/** No Error */
-	SCECdErNO	= 0x00,
-	/** Aborted */
-	SCECdErABRT,
+enum SCECdvdErrorCode {
+    /** Can't get error code */
+    SCECdErFAIL = -1,
+    /** No Error */
+    SCECdErNO = 0x00,
+    /** Aborted */
+    SCECdErABRT,
 
-	/** Unsupported command */
-	SCECdErCMD	= 0x10,
-	/** Tray is open */
-	SCECdErOPENS,
-	/** No disc inserted */
-	SCECdErNODISC,
-	/** Device not ready */
-	SCECdErNORDY,
-	/** Unsupported command for current disc */
-	SCECdErCUD,
+    /** Unsupported command */
+    SCECdErCMD = 0x10,
+    /** Tray is open */
+    SCECdErOPENS,
+    /** No disc inserted */
+    SCECdErNODISC,
+    /** Device not ready */
+    SCECdErNORDY,
+    /** Unsupported command for current disc */
+    SCECdErCUD,
 
-	/** Illegal position/LSN */
-	SCECdErIPI	= 0x20,
-	/** Illegal length */
-	SCECdErILI,
-	/** Invalid parameter */
-	SCECdErPRM,
+    /** Illegal position/LSN */
+    SCECdErIPI = 0x20,
+    /** Illegal length */
+    SCECdErILI,
+    /** Invalid parameter */
+    SCECdErPRM,
 
-	/** Read error */
-	SCECdErREAD	= 0x30,
-	/** Tray was opened while reading */
-	SCECdErTRMOPN,
-	/** End Of Media */
-	SCECdErEOM,
-	SCECdErSFRMTNG	= 0x38,
+    /** Read error */
+    SCECdErREAD = 0x30,
+    /** Tray was opened while reading */
+    SCECdErTRMOPN,
+    /** End Of Media */
+    SCECdErEOM,
+    SCECdErSFRMTNG = 0x38,
 
-	/** Error setting command */
-	SCECdErREADCF	= 0xFD,
-	/** Error setting command */
-	SCECdErREADCFR
+    /** Error setting command */
+    SCECdErREADCF = 0xFD,
+    /** Error setting command */
+    SCECdErREADCFR
 };
 
-enum SCECdvdMediaType{
-	SCECdGDTFUNCFAIL	= -1,
-	SCECdNODISC		= 0x00,
-	SCECdDETCT,
-	SCECdDETCTCD,
-	SCECdDETCTDVDS,
-	SCECdDETCTDVDD,
-	SCECdUNKNOWN,
+enum SCECdvdMediaType {
+    SCECdGDTFUNCFAIL = -1,
+    /** No Disc inserted */
+    SCECdNODISC      = 0x00,
+    /** Detecting disc type */
+    SCECdDETCT,
+    SCECdDETCTCD,
+    SCECdDETCTDVDS,
+    SCECdDETCTDVDD,
+    /** Unknown disc type */
+    SCECdUNKNOWN,
 
-	SCECdPSCD		= 0x10,
-	SCECdPSCDDA,
-	SCECdPS2CD,
-	SCECdPS2CDDA,
-	SCECdPS2DVD,
+    /** PS1 CD with no CDDA tracks */
+    SCECdPSCD = 0x10,
+    /** PS1 CD with CDDA tracks */
+    SCECdPSCDDA,
+    /** PS2 CD with no CDDA tracks */
+    SCECdPS2CD,
+    /** PS2 CD with CDDA tracks */
+    SCECdPS2CDDA,
+    /** PS2 DVD */
+    SCECdPS2DVD,
 
-	SCECdCDDA		= 0xFD,
-	SCECdDVDV,
-	SCECdIllegalMedia
+    /** CDDA */
+    SCECdCDDA = 0xFD,
+    /** DVD Video */
+    SCECdDVDV,
+    /** Illegal disk type */
+    SCECdIllegalMedia
 };
 
-enum SCECdvdInterruptCode{
-	/** No interrupt */
-	CdlNoIntr	= 0x00,
-	/** Data Ready */
-	CdlDataReady,
-	/** Command Complete */
-	SCECdComplete,
-	/** Acknowledge (reserved) */
-	CdlAcknowledge,
-	/** End of Data Detected */
-	CdlDataEnd,
-	/** Error Detected */
-	CdlDiskError,
-	/** Drive Not Ready */
-	SCECdNotReady
+enum SCECdvdInterruptCode {
+    /** No interrupt */
+    CdlNoIntr = 0x00,
+    /** Data Ready */
+    CdlDataReady,
+    /** Command Complete */
+    SCECdComplete,
+    /** Acknowledge (reserved) */
+    CdlAcknowledge,
+    /** End of Data Detected */
+    CdlDataEnd,
+    /** Error Detected */
+    CdlDiskError,
+    /** Drive Not Ready */
+    SCECdNotReady
 
 };
 
-//Tray request modes
-enum SCECdvdTrayReqMode{
-	SCECdTrayOpen=0,
-	SCECdTrayClose,
-	SCECdTrayCheck
+// Tray request modes
+enum SCECdvdTrayReqMode {
+    /** Tray Open */
+    SCECdTrayOpen = 0,
+    /** Tray Close */
+    SCECdTrayClose,
+    /** Tray Check */
+    SCECdTrayCheck
 };
 
-//Drive states
-enum SCECdvdDriveState{
-	SCECdStatStop	= 0x00,
-	SCECdStatShellOpen,
-	SCECdStatSpin,
-	SCECdStatRead	= 0x06,
-	SCECdStatPause	= 0x0A,
-	SCECdStatSeek	= 0x12,
-	SCECdStatEmg	= 0x20,
+// Drive states
+enum SCECdvdDriveState {
+    /** disc has stopped spinning */
+    SCECdStatStop = 0x00,
+    /** tray is open */
+    SCECdStatShellOpen,
+    /** disc is spinning */
+    SCECdStatSpin,
+    /** reading from disc */
+    SCECdStatRead  = 0x06,
+    /** disc is paused */
+    SCECdStatPause = 0x0A,
+    /** disc is seeking */
+    SCECdStatSeek  = 0x12,
+    /** error occurred */
+    SCECdStatEmg   = 0x20,
 };
 
-typedef struct {
-	u8 stat;
-	u8 second;
-	u8 minute;
-	u8 hour;
-	u8 pad;
-	u8 day;
-	u8 month;
-	u8 year;
+typedef struct
+{
+    /** status */
+    u8 stat;
+    /** second */
+    u8 second;
+    /** minute */
+    u8 minute;
+    /** hour */
+    u8 hour;
+    /** padding */
+    u8 pad;
+    /** day */
+    u8 day;
+    /** month */
+    u8 month;
+    /** year */
+    u8 year;
 } sceCdCLOCK;
 
-typedef struct {
-	u32 lsn;
-	u32 size;
-	char name[16];
-	u8 date[8];
+typedef struct
+{
+    /** file location */
+    u32 lsn;
+    /** file size */
+    u32 size;
+    /** file name (body) */
+    char name[16];
+    /** date (1=secs, 2=mins, 3=hours, 4=day, 5=mon, 6,7=year,   0=iso file flags) */
+    u8 date[8];
 } sceCdlFILE;
 
 // location structure, used with sceCdIntToPos() and sceCdPosToInt()
-typedef struct {
-	/** minute (BCD) */
-	u8 minute;
-	/** second (BCD) */
-	u8 second;
-	/** sector (BCD) */
-	u8 sector;
-	/** track (void), aka "frame" */
-	u8 track;
+typedef struct
+{
+    /** minute (BCD) */
+    u8 minute;
+    /** second (BCD) */
+    u8 second;
+    /** sector (BCD) */
+    u8 sector;
+    /** track (void), aka "frame" */
+    u8 track;
 } sceCdlLOCCD;
 
-typedef struct {
-	u8 trycount;
-	u8 spindlctrl;
-	u8 datapattern;
-	u8 pad;
+typedef struct
+{
+    /** number of times to retry reads when an error occurs */
+    u8 trycount;
+    /** speed to read at SCECdvdSpinValue enumeration values (also speed to spin at) */
+    u8 spindlctrl;
+    /** sector size value SCECdvdSectorType enumeration values */
+    u8 datapattern;
+    /** padding */
+    u8 pad;
 } sceCdRMode;
 
-typedef struct {
-	/** sector location to start reading from */
-	u32 lbn;
-	/** number of sectors to read */
-	u32 sectors;
-	/** buffer address to read to ( bit0: 0=EE, 1=IOP ) (EE addresses must be on 64-byte alignment) */
-	u32 buffer;
+typedef struct
+{
+    /** sector location to start reading from */
+    u32 lbn;
+    /** number of sectors to read */
+    u32 sectors;
+    /** buffer address to read to ( bit0: 0=EE, 1=IOP ) (EE addresses must be on 64-byte alignment) */
+    u32 buffer;
 } sceCdRChain;
 
 // macros for converting between an integer and a BCD number
 #ifndef btoi
-#define btoi(b)		((b)/16*10 + (b)%16)	// BCD to int
+#define btoi(b) ((b) / 16 * 10 + (b) % 16) // BCD to int
 #endif
 #ifndef itob
-#define itob(i)		((i)/10*16 + (i)%10)	// int to BCD
+#define itob(i) ((i) / 10 * 16 + (i) % 10) // int to BCD
 #endif
 
 /** max number of toc entries for sceCdGetToc() */
-#define CdlMAXTOC	100
+#define CdlMAXTOC 100
 
-enum SCECdvdCallbackReason{
-	SCECdFuncRead	= 1,
-	SCECdFuncReadCDDA,
-	SCECdFuncGetToc,
-	SCECdFuncSeek,
-	SCECdFuncStandby,
-	SCECdFuncStop,
-	SCECdFuncPause,
-	SCECdFuncBreak
+enum SCECdvdCallbackReason {
+    SCECdFuncRead = 1,
+    SCECdFuncReadCDDA,
+    SCECdFuncGetToc,
+    SCECdFuncSeek,
+    SCECdFuncStandby,
+    SCECdFuncStop,
+    SCECdFuncPause,
+    SCECdFuncBreak
 };
 
 /** sceCd callback function typedef for sceCdCallback() */
 typedef void (*sceCdCBFunc)(int reason);
 
-enum SCECdvdInitMode{
-	/** Initializes library and waits until commands can be sent. */
-	SCECdINIT	= 0x00,
-	/** Initialize only the library. */
-	SCECdINoD,
-	/** Deinitialize library. */
-	SCECdEXIT	= 0x05
+enum SCECdvdInitMode {
+    /** Initializes library and waits until commands can be sent. */
+    SCECdINIT = 0x00,
+    /** Initialize only the library. */
+    SCECdINoD,
+    /** Deinitialize library. */
+    SCECdEXIT = 0x05
 };
 
-// Low-level filesystem properties for sceCdSearchFile() 
+// Low-level filesystem properties for sceCdSearchFile()
 /** Maximum number of files in a directory. */
-#define CdlMAXFILE	64
+#define CdlMAXFILE  64
 /** Maximum number of total directories. */
-#define CdlMAXDIR	128
+#define CdlMAXDIR   128
 /** Maximum levels of directories. */
-#define CdlMAXLEVEL	8
+#define CdlMAXLEVEL 8
 
+enum SCECdvdFanSpeed {
+    /** The fan will spin at the minimum speed. */
+    SCECdvdFanSpeedMinimum = 0x00,
+    /** The fan will spin at a medium speed. */
+    SCECdvdFanSpeedMedium,
+    /** The fan will spin at the maximum speed. */
+    SCECdvdFanSpeedMaximum,
+};
+
+// LED definitions for sceCdSetLEDsMode()
+/** Light up the red LED on the power button. */
+#define CdlLEDPowerRed 1
+/** Light up the green LED on the power button. */
+#define CdlLEDPowerGreen 2
+/** Light up the yellow LED on the power button. */
+#define CdlLEDPowerYellow 4
+/** Light up the blue LED on the eject button. */
+#define CdlLEDEjectBlue 8
 
 // For streaming operations (Use with sceCdStRead())
-enum SCECdvdStreamMode{
-	/** Stream without blocking. */
-	STMNBLK	= 0,
-	/** Stream, but block. */
-	STMBLK 
+enum SCECdvdStreamMode {
+    /** Stream without blocking. */
+    STMNBLK = 0,
+    /** Stream, but block. */
+    STMBLK
 };
 
 // EE read modes (Used with sceCdSetEEReadMode()).
-#define SCECdNoCheckReady	0x00000001
-#define SCECdNoWriteBackDCache	0x00000002
+#define SCECdNoCheckReady      0x00000001
+#define SCECdNoWriteBackDCache 0x00000002
 
 #ifdef __cplusplus
 extern "C" {
@@ -271,7 +331,7 @@ extern "C" {
 
 /** read data from disc
  * non-blocking, requires sceCdSync() call
- * 
+ *
  * @param lbn sector location to start reading from
  * @param sectors number of sectors to read
  * @param buffer buffer to read to
@@ -283,7 +343,7 @@ int sceCdReadDVDV(u32 lbn, u32 sectors, void *buffer, sceCdRMode *mode);
 int sceCdReadCDDA(u32 lbn, u32 sectors, void *buffer, sceCdRMode *mode);
 
 /** get toc from inserted disc
- * 
+ *
  * @param toc buffer to hold toc (1024 bytes)
  * @return 1 on success, 0 on failure.
  */
@@ -299,7 +359,7 @@ int sceCdGetToc2(u8 *toc, int param);
 
 /** seek to given sector on disc
  * non-blocking, requires sceCdSync() call
- * 
+ *
  * @param lbn sector to seek to on disc
  * @return 1 on success, 0 on failure.
  */
@@ -307,21 +367,21 @@ int sceCdSeek(u32 lbn);
 
 /** puts ps2 sceCd drive into standby mode
  * non-blocking, requires sceCdSync() call
- * 
+ *
  * @return 1 on success, 0 on failure.
  */
 int sceCdStandby(void);
 
 /** stops ps2 sceCd drive from spinning
  * non-blocking, requires sceCdSync() call
- * 
+ *
  * @return 1 on success, 0 on failure.
  */
 int sceCdStop(void);
 
 /** pauses ps2 sceCd drive
  * non-blocking, requires sceCdSync() call
- * 
+ *
  * @return 1 on success, 0 on failure.
  */
 int sceCdPause(void);
@@ -330,14 +390,23 @@ int sceCdPause(void);
  * last chain value must be all 0xFFFFFFFF
  * (max of 64 reads can be set at once)
  * non-blocking, requires sceCdSync() call
- * 
+ *
  * SUPPORTED IN XCDVDMAN/XCDVDFSV ONLY
- * 
+ *
  * @param tag pointer to an array of read chain data
  * @param mode read mode
  * @return 1 on success, 0 on failure.
  */
 int sceCdReadChain(sceCdRChain *tag, sceCdRMode *mode);
+
+/** send an n-command by function number
+ *
+ * @param cmdNum command number
+ * @param inBuff input buffer  (can be null)
+ * @param inBuffSize size of input buffer  (0 - 16 bytes)
+ * @return 1 on success, 0 on failure.
+ */
+int sceCdApplyNCmd(u8 cmdNum, const void* inBuff, u16 inBuffSize);
 
 // **** S-Command functions ****
 
@@ -353,26 +422,28 @@ int sceCdReadClock(sceCdCLOCK *clock);
 
 /** Sets the PlayStation 2 clock.
  * (time value is in BCD)
- * 
+ *
+ * NOTE: The normalized value will be written back to the buffer specified.
+ *
  * @param clock time/date struct to set clocks time with
  * @return 1 on success, 0 on failure.
  */
-int sceCdWriteClock(const sceCdCLOCK *clock);
+int sceCdWriteClock(sceCdCLOCK *clock);
 
 /** gets the type of the currently inserted disc
- * 
+ *
  * @return disk type (SCECdvdMediaTypes)
  */
 int sceCdGetDiskType(void);
 
 /** gets the last error that occurred
- * 
+ *
  * @return error type (SCECdvdErrorCode)
  */
 int sceCdGetError(void);
 
 /** open/close/check disk tray
- * 
+ *
  * @param param param (SCECdvdTrayReqMode)
  * @param traychk address for returning tray state change
  * @return 1 on success, 0 on failure.
@@ -380,30 +451,30 @@ int sceCdGetError(void);
 int sceCdTrayReq(int param, u32 *traychk);
 
 /** gets the state of the drive
- * 
+ *
  * @return status (SCECdvdDriveStates)
  */
 int sceCdStatus(void);
 
 /** 'breaks' the currently executing command
- * 
+ *
  * @return 1 on success, 0 on failure.
  */
 int sceCdBreak(void);
 
 /** cancel power off
- * 
+ * Minimum Mechacon firmware version: 20400
  * SUPPORTED IN XCDVDMAN/XCDVDFSV ONLY
- * 
+ *
  * @param result result
  * @return 1 on success, 0 on failure.
  */
-int sceCdCancelPOffRdy(u32* result);
+int sceCdCancelPOffRdy(u32 *result);
 
 /** blue led control
- * 
+ *
  * SUPPORTED IN XCDVDMAN/XCDVDFSV ONLY
- * 
+ *
  * @param control control value
  * @param result result
  * @return 1 on success, 0 on failure.
@@ -411,37 +482,46 @@ int sceCdCancelPOffRdy(u32* result);
 int sceCdBlueLEDCtl(u8 control, u32 *result);
 
 /** power off
- * 
+ *
  * SUPPORTED IN XCDVDMAN/XCDVDFSV ONLY
- * 
+ *
  * @param result result
  * @return 1 on success, 0 on failure.
  */
 int sceCdPowerOff(u32 *result);
 
 /** set media mode
- * 
+ *
  * SUPPORTED IN XCDVDMAN/XCDVDFSV ONLY
- * 
+ *
  * @param media media mode (SCECdvdMModeMediaTypes)
  * @return 1 on success, 0 on failure.
  */
 int sceCdMmode(int media);
 
 /** change libcdvd thread priority
- * 
+ *
  * SUPPORTED IN XCDVDMAN/XCDVDFSV ONLY
- * 
+ *
  * @param priority priority
  * @return 1 on success, 0 on failure.
  */
 int sceCdChangeThreadPriority(int priority);
 
+/** send an s-command by function number
+ *
+ * @param command number
+ * @param input buffer  (can be null)
+ * @param size of input buffer  (0 - 16 bytes)
+ * @param output buffer (16 bytes, can be null)
+ * @return 1 if successful, 0 if error
+ */
+int sceCdApplySCmd(u8 cmdNum, const void *inBuff, u16 inBuffSize, void *outBuff);
 
 // **** Streaming Functions ****
 
 /** start streaming data
- * 
+ *
  * @param lbn sector location to start streaming from
  * @param mode mode to read in
  * @return 1 on success, 0 on failure.
@@ -449,7 +529,7 @@ int sceCdChangeThreadPriority(int priority);
 int sceCdStStart(u32 lbn, sceCdRMode *mode);
 
 /** read stream data
- * 
+ *
  * @param sectors number of sectors to read
  * @param buffer read buffer address
  * @param mode data stream mode (STMNBLK or STMBLK)
@@ -459,20 +539,20 @@ int sceCdStStart(u32 lbn, sceCdRMode *mode);
 int sceCdStRead(u32 sectors, u32 *buffer, u32 mode, u32 *error);
 
 /** stop streaming
- * 
+ *
  * @return 1 on success, 0 on failure.
  */
 int sceCdStStop(void);
 
 /** seek to a new stream position
- * 
+ *
  * @param lbn sector location to start streaming from
  * @return 1 on success, 0 on failure.
  */
 int sceCdStSeek(u32 lbn);
 
 /** init streaming
- * 
+ *
  * @param bufmax stream buffer size
  * @param bankmax number of ring buffers
  * @param buffer buffer address on iop
@@ -481,19 +561,19 @@ int sceCdStSeek(u32 lbn);
 int sceCdStInit(u32 bufmax, u32 bankmax, void *buffer);
 
 /** get stream read status
- * 
+ *
  * @return number of sectors read if successful, 0 otherwise
  */
 int sceCdStStat(void);
 
 /** pause streaming
- * 
+ *
  * @return 1 on success, 0 on failure.
  */
 int sceCdStPause(void);
 
 /** continue streaming
- * 
+ *
  * @return 1 on success, 0 on failure.
  */
 int sceCdStResume(void);
@@ -501,21 +581,21 @@ int sceCdStResume(void);
 // **** Other Functions ****
 
 /** initializes libcdvd
- * 
+ *
  * @param mode mode (SCECdvdInitModes)
  * @return 1 on success, 0 on failure.
  */
 int sceCdInit(int mode);
 
 /** waits/checks for completion of n-commands
- * 
+ *
  * @param mode 0 = wait for completion of command (blocking), 1 = check current status and return immediately
  * @return 0 = completed, 1 = not completed
  */
 int sceCdSync(int mode);
 
 /** search for a file on disc
- * 
+ *
  * @param file file structure to get file info in
  * @param name name of file to search for (no wildcard characters) (should be in the form '\\SYSTEM.CNF;1')
  * @return 1 on success, 0 on failure. (or no file found)
@@ -523,7 +603,7 @@ int sceCdSync(int mode);
 int sceCdSearchFile(sceCdlFILE *file, const char *name);
 
 /** checks if drive is ready
- * 
+ *
  * @param mode mode
  * @return SCECdComplete if ready, SCECdNotReady if busy
  */
@@ -539,7 +619,7 @@ u32 sceCdPosToInt(sceCdlLOCCD *p);
 u32 sceCdGetReadPos(void);
 
 /** initialise EE callback thread
- * 
+ *
  * @param priority callback thread priority
  * @param stackAddr callback thread stack address
  * @param stackSize callback thread stack size
@@ -548,7 +628,7 @@ u32 sceCdGetReadPos(void);
 int sceCdInitEeCB(int priority, void *stackAddr, int stackSize);
 
 /** set sceCd callback function
- * 
+ *
  * @param function pointer to new callback function
  * @return pointer to old function
  */
@@ -719,10 +799,10 @@ int sceCdMV(u8 *buffer, u32 *status);
  * SUPPORTED IN XCDVDMAN/XCDVDFSV ONLY
  *
  * @param romname ROM version - The ROM "name" of the console in this format:
- *				romname[0]	- ROM major version number (In decimal).
- *				romname[1]	- ROM minor version number (In decimal).
- *				romname[2]	- ROM region.
- *				romname[3]	- Console type (E.g. C, D or T).
+ *                romname[0]    - ROM major version number (In decimal).
+ *                romname[1]    - ROM minor version number (In decimal).
+ *                romname[2]    - ROM region.
+ *                romname[3]    - Console type (E.g. C, D or T).
  * @return 1 on success, 0 on failure.
  */
 int sceCdBootCertify(const u8 *romname);
@@ -781,9 +861,9 @@ int sceCdStSeekF(unsigned long int lsn);
  *
  * @param func pointer of callback function to be called when power-off processing is activated
  * @param addr an argument which will be passed to the callback function
- * returns:	a pointer to the previous handler function, or a null pointer if nothing has been set eariler
+ * returns: a pointer to the previous handler function, or a null pointer if nothing has been set eariler
  */
-void *sceCdPOffCallback(void(*func)(void *),void *addr);
+void *sceCdPOffCallback(void (*func)(void *), void *addr);
 
 /** Sets the timeout lengths for the certain CDVDMAN's operations.
  * SUPPORTED IN NEWER CDVDMAN MODULES INCLUDED WITHIN NEWER IOPRP ONLY
@@ -837,7 +917,7 @@ int sceCdStatus2(void);
  * @param mode mode to read in
  * @return 1 on success, 0 on failure.
  */
-int sceCdRE(unsigned long int lsn,unsigned long int sectors,void *buf,sceCdRMode *mode);
+int sceCdRE(unsigned long int lsn, unsigned long int sectors, void *buf, sceCdRMode *mode);
 
 /** Reads a GUID.
  * SUPPORTED IN NEWER CDVDMAN MODULES INCLUDED WITHIN DNAS IOPRP ONLY
@@ -848,6 +928,7 @@ int sceCdRE(unsigned long int lsn,unsigned long int sectors,void *buf,sceCdRMode
 int sceCdReadGUID(u64 *guid);
 
 /** Controls remote-control bypass
+ * Minimum Mechacon firmware version: 50000
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @param mode 0 = Bypass, 1 = Normal
@@ -857,6 +938,7 @@ int sceCdReadGUID(u64 *guid);
 int sceCdRcBypassCtl(int mode, u32 *status);
 
 /** Reads wake up time.
+ * Minimum Mechacon firmware version: 50000
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
  * @return 1 on success, 0 on failure
@@ -864,6 +946,7 @@ int sceCdRcBypassCtl(int mode, u32 *status);
 int sceCdReadWakeUpTime(sceCdCLOCK *clock, u16 *arg2, u32 *arg3, int *arg4);
 
 /** Writes wake up time.
+ * Minimum Mechacon firmware version: 50000
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
  * @return 1 on success, 0 on failure
@@ -871,20 +954,25 @@ int sceCdReadWakeUpTime(sceCdCLOCK *clock, u16 *arg2, u32 *arg3, int *arg4);
 int sceCdWriteWakeUpTime(const sceCdCLOCK *clock, u16 arg2, int arg3);
 
 /** Remote control 2_7.
+ * Minimum Mechacon firmware version: 50000
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
  * @return 1 on success, 0 on failure
  */
 int sceRemote2_7(u16 a1, u32 *a2);
 
-/** Set LEDs mode.
+/** Set the LED state of the face buttons of the console.
+ * The state of the buttons will be reset when the power or eject button is pressed.
+ * Minimum Mechacon firmware version: 50000
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
+ * @param param The LED state to set.
  * @return 1 on success, 0 on failure
  */
-int sceCdSetLEDsMode(u32 arg1, u32 *result);
+int sceCdSetLEDsMode(u32 param, u32 *result);
 
 /** Reads PS1 boot parameter.
+ * Minimum Mechacon firmware version: 50200
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
  * @return 1 on success, 0 on failure
@@ -892,11 +980,13 @@ int sceCdSetLEDsMode(u32 arg1, u32 *result);
 int sceCdReadPS1BootParam(u8 *out, u32 *result);
 
 /** Sets fan profile.
+ * Minimum Mechacon firmware version: 50400
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
+ * @param param param (SCECdvdFanSpeed)
  * @return 1 on success, 0 on failure
  */
-int sceCdSetFanProfile(u8 arg1, u32 *result);
+int sceCdSetFanProfile(u8 param, u32 *result);
 
 /** Change sys.
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
@@ -906,6 +996,7 @@ int sceCdSetFanProfile(u8 arg1, u32 *result);
 int sceCdChgSys(u32 arg1);
 
 /** Notice game start.
+ * Minimum Mechacon firmware version: 50400
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @return 1 on success, 0 on failure
@@ -913,6 +1004,7 @@ int sceCdChgSys(u32 arg1);
 int sceCdNoticeGameStart(u8 arg1, u32 *result);
 
 /** Extended LED control.
+ * Minimum Mechacon firmware version: 50600
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @return 1 on success, 0 on failure
@@ -920,6 +1012,7 @@ int sceCdNoticeGameStart(u8 arg1, u32 *result);
 int sceCdXLEDCtl(u8 arg1, u8 arg2, u32 *result1, u32 *result2);
 
 /** Buzzer control.
+ * Minimum Mechacon firmware version: 50600
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @return 1 on success, 0 on failure
@@ -927,6 +1020,7 @@ int sceCdXLEDCtl(u8 arg1, u8 arg2, u32 *result1, u32 *result2);
 int sceCdBuzzerCtl(u32 *result);
 
 /** XBS power control.
+ * Minimum Mechacon firmware version: 50600
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @return 1 on success, 0 on failure
@@ -934,6 +1028,7 @@ int sceCdBuzzerCtl(u32 *result);
 int sceCdXBSPowerCtl(u8 arg1, u8 arg2, u32 *result1, u32 *result2);
 
 /** Set medium removal.
+ * Minimum Mechacon firmware version: 50600
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @return 1 on success, 0 on failure
@@ -941,6 +1036,7 @@ int sceCdXBSPowerCtl(u8 arg1, u8 arg2, u32 *result1, u32 *result2);
 int sceCdSetMediumRemoval(u8 arg1, u32 *result);
 
 /** Get medium removal.
+ * Minimum Mechacon firmware version: 50600
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @return 1 on success, 0 on failure
@@ -948,6 +1044,7 @@ int sceCdSetMediumRemoval(u8 arg1, u32 *result);
 int sceCdGetMediumRemoval(u32 *result1, u32 *result2);
 
 /** XDVRP reset.
+ * Minimum Mechacon firmware version: 50600
  * SUPPORTED BY ONLY DESR/PSX DVR CDVDMAN MODULES
  *
  * @return 1 on success, 0 on failure
@@ -962,6 +1059,7 @@ int sceCdXDVRPReset(u8 arg1, u32 *result);
 int sceCdGetWakeUpReason(void);
 
 /** Reads region parameters.
+ * Minimum Mechacon firmware version: 60000
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
  * @return 1 on success, 0 on failure
@@ -969,11 +1067,219 @@ int sceCdGetWakeUpReason(void);
 int sceCdReadRegionParams(u32 *arg1, u32 *result);
 
 /** Writes region parameters.
+ * Minimum Mechacon firmware version: 60600
  * SUPPORTED IN XCDVDMAN INCLUDED WITHIN NEWER BOOT ROMS ONLY
  *
  * @return 1 on success, 0 on failure
  */
 int sceCdWriteRegionParams(u8 arg1, u32 *arg2, u8 *arg3, u32 *result);
+
+// Compatibility names for older ps2sdk versions.
+
+// sceCdlFILE renames
+#define CdvdFileSpec_t sceCdlFILE
+#define cd_file_t      sceCdlFILE
+// Structure member names are the same
+
+// sceCdRMode renames
+#define CdvdReadMode_t sceCdRMode
+#define cd_read_mode_t sceCdRMode
+// Structure member names differ:
+// retries -> trycount
+// readSpeed -> spindlctrl
+// sectorType -> datapattern
+
+// SCECdvdSectorType renames
+#define SCECdvdSectorTypes SCECdvdSectorType
+#define CdvdSectorType_t   SCECdvdSectorType
+#define CDVD_SECTOR_2048   SCECdSecS2048
+#define CDVD_SECTOR_2328   SCECdSecS2328
+#define CDVD_SECTOR_2340   SCECdSecS2340
+#define CDVD_SECTOR_2352   SCECdSecS2352
+#define CDVD_SECTOR_2368   SCECdSecS2368
+#define CDVD_SECTOR_2448   SCECdSecS2448
+#define CdSecS2048         SCECdSecS2048
+#define CdSecS2328         SCECdSecS2328
+#define CdSecS2340         SCECdSecS2340
+
+// SCECdvdSpinValue renames
+#define SCECdvdSpinValues SCECdvdSpinValue
+#define CDVD_SPIN_MAX     SCECdSpinMax
+#define CDVD_SPIN_NORMAL  SCECdSpinNom
+#define CDVD_SPIN_STREAM  SCECdSpinStm
+#define CDVD_SPIN_DVD0    SCECdSpinDvdDL0
+#define CdSpinMax         SCECdSpinMax
+#define CdSpinNom         SCECdSpinNom
+#define CdSpinStm         SCECdSpinStm
+
+// SCECdvdErrorCode renames
+#define SCECdvdErrorCodes SCECdvdErrorCode
+#define CDVD_ERR_FAIL     SCECdErFAIL
+#define CDVD_ERR_NO       SCECdErNO
+#define CDVD_ERR_ABRT     SCECdErABRT
+#define CDVD_ERR_CMD      SCECdErCMD
+#define CDVD_ERR_OPENS    SCECdErOPENS
+#define CDVD_ERR_NODISC   SCECdErNODISC
+#define CDVD_ERR_NORDY    SCECdErNORDY
+#define CDVD_ERR_CUD      SCECdErCUD
+#define CDVD_ERR_IPI      SCECdErIPI
+#define CDVD_ERR_ILI      SCECdErILI
+#define CDVD_ERR_PRM      SCECdErPRM
+#define CDVD_ERR_READ     SCECdErREAD
+#define CDVD_ERR_TRMOPN   SCECdErTRMOPN
+#define CDVD_ERR_EOM      SCECdErEOM
+#define CDVD_ERR_READCF   SCECdErREADCF
+#define CDVD_ERR_READCFR  SCECdErREADCFR
+
+// SCECdvdMediaType renames
+#define SCECdvdMediaTypes          SCECdvdMediaType
+#define CdvdDiscType_t             SCECdvdMediaType
+#define CDVD_TYPE_NODISK           SCECdNODISC
+#define CDVD_TYPE_DETECT           SCECdDETCT
+#define CDVD_TYPE_DETECT_CD        SCECdDETCTCD
+#define CDVD_TYPE_DETECT_DVDSINGLE SCECdDETCTDVDS
+#define CDVD_TYPE_DETECT_DVDDUAL   SCECdDETCTDVDD
+#define CDVD_TYPE_UNKNOWN          SCECdUNKNOWN
+#define CDVD_TYPE_PS1CD            SCECdPSCD
+#define CDVD_TYPE_PS1CDDA          SCECdPSCDDA
+#define CDVD_TYPE_PS2CD            SCECdPS2CD
+#define CDVD_TYPE_PS2CDDA          SCECdPS2CDDA
+#define CDVD_TYPE_PS2DVD           SCECdPS2DVD
+#define CDVD_TYPE_CDDA             SCECdCDDA
+#define CDVD_TYPE_DVDVIDEO         SCECdDVDV
+#define CDVD_TYPE_ILLEGAL          SCECdIllegalMedia
+
+// SCECdvdDriveState renames
+#define SCECdvdDriveStates SCECdvdDriveState
+#define CDVD_STAT_STOP     SCECdStatStop
+#define CDVD_STAT_OPEN     SCECdStatShellOpen
+#define CDVD_STAT_SPIN     SCECdStatSpin
+#define CDVD_STAT_READ     SCECdStatRead
+#define CDVD_STAT_PAUSE    SCECdStatPause
+#define CDVD_STAT_SEEK     SCECdStatSeek
+#define CDVD_STAT_ERROR    SCECdStatEmg
+
+// SCECdvdMModeMediaType renames
+#define SCECdvdMModeMediaTypes SCECdvdMModeMediaType
+#define CdvdMediaMode_t        SCECdvdMModeMediaType
+#define CDVD_MEDIA_MODE_CD     SCECdMmodeCd
+#define CDVD_MEDIA_MODE_DVD    SCECdMmodeDvd
+#define CdMmodeCd              SCECdMmodeCd
+#define CdMmodeDvd             SCECdMmodeDvd
+
+// sceCdlLOCCD renames
+#define CdvdLocation_t sceCdlLOCCD
+#define cd_location_t  sceCdlLOCCD
+// Structure member names are the same
+
+// SCECdvdInitMode renames
+#define SCECdvdInitModes  SCECdvdInitMode
+#define CDVD_INIT_INIT    SCECdINIT
+#define CDVD_INIT_NOCHECK SCECdINoD
+#define CDVD_INIT_EXIT    SCECdEXIT
+
+// SCECdvdInterruptCode renames
+#define SCECdvdInterruptCodes SCECdvdInterruptCode
+#define CDVD_READY_READY      SCECdComplete
+#define CDVD_READY_NOTREADY   SCECdNotReady
+
+// sceCdCLOCK renames
+#define CdvdClock_t sceCdCLOCK
+#define cd_clock_t  sceCdCLOCK
+// Structure member names differ:
+// status -> stat
+// week -> pad
+
+// SCECdvdStreamMode renames
+#define SCECdvdStreamModes   SCECdvdStreamMode
+#define CDVD_STREAM_NONBLOCK STMNBLK
+#define CDVD_STREAM_BLOCK    STMBLK
+
+// SCECdvdTrayReqMode renames
+#define SCECdvdTrayReqModes SCECdvdTrayReqMode
+#define CDVD_TRAY_OPEN      SCECdTrayOpen
+#define CDVD_TRAY_CLOSE     SCECdTrayClose
+#define CDVD_TRAY_CHECK     SCECdTrayCheck
+
+// sceCdCBFunc rename
+#define CdCBFunc sceCdCBFunc
+
+// SCECdvdCallbackReason rename
+#define SCECdvdCallbackReasons SCECdvdCallbackReason
+
+
+// function renames
+#define CdInit         sceCdInit
+#define cdInit         sceCdInit
+#define CdStandby      sceCdStandby
+#define cdStandby      sceCdStandby
+#define CdRead         sceCdRead
+#define cdRead         sceCdRead
+#define CdSeek         sceCdSeek
+#define cdSeek         sceCdSeek
+#define CdGetError     sceCdGetError
+#define cdGetError     sceCdGetError
+#define CdGetToc       sceCdGetToc
+#define cdGetToc       sceCdGetToc
+#define CdSearchFile   sceCdSearchFile
+#define cdSearchFile   sceCdSearchFile
+#define CdSync         sceCdSync
+#define cdSync         sceCdSync
+#define CdGetDiskType  sceCdGetDiskType
+#define cdGetDiscType  sceCdGetDiskType
+#define CdDiskReady    sceCdDiskReady
+#define cdDiskReady    sceCdDiskReady
+#define CdTrayReq      sceCdTrayReq
+#define cdTrayReq      sceCdTrayReq
+#define CdStop         sceCdStop
+#define cdStop         sceCdStop
+#define CdPosToInt     sceCdPosToInt
+#define cdPosToInt     sceCdPosToInt
+#define CdIntToPos     sceCdIntToPos
+#define cdIntToPos     sceCdIntToPos
+#define CdReadClock    sceCdReadClock
+#define cdReadClock    sceCdReadClock
+#define CdStatus       sceCdStatus
+#define cdStatus       sceCdStatus
+#define CdCallback     sceCdCallback
+#define cdSetCallback  sceCdCallback
+#define CdPause        sceCdPause
+#define cdPause        sceCdPause
+#define CdBreak        sceCdBreak
+#define cdBreak        sceCdBreak
+#define CdReadCdda     sceCdReadCdda
+#define cdCddaRead     sceCdReadCdda
+#define CdGetReadPos   sceCdGetReadPos
+#define cdGetReadPos   sceCdGetReadPos
+#define CdMmode        sceCdMmode
+#define cdSetMediaMode sceCdMmode
+
+#define cdDvdRead              sceCdReadDVDV
+#define cdApplyNCmd            sceCdApplyNCmd
+#define cdReadIOPMem           sceCdReadIOPMem
+#define cdNCmdDiskReady        sceCdNCmdDiskReady
+#define cdReadChain            sceCdReadChain
+#define cdWriteClock           sceCdWriteClock
+#define cdApplySCmd            sceCdApplySCmd
+#define cdCancelPowerOff       sceCdCancelPOffRdy
+#define cdBlueLedCtrl          sceCdBlueLEDCtl
+#define sceCdBlueLedCtrl       sceCdBlueLEDCtl
+#define cdPowerOff             sceCdPowerOff
+#define cdChangeThreadPriority sceCdChangeThreadPriority
+#define cdStStart              sceCdStStart
+#define cdStRead               sceCdStRead
+#define cdStStop               sceCdStStop
+#define cdStSeek               sceCdStSeek
+#define cdStInit               sceCdStInit
+#define cdStStat               sceCdStStat
+#define cdStPause              sceCdStPause
+#define cdStResume             sceCdStResume
+#define CdRC                   sceCdRC
+
+// Internal definitions no longer exposed:
+// cdStream
+// cdCddaStream
+// cdInitCallbackThread
 
 #ifdef __cplusplus
 }

@@ -90,6 +90,13 @@
 #ifndef __SOFTFP__
 # define _SUPPORTS_ERREXCEPT
 #endif
+/* As per ISO/IEC TS 18661 '__FLT_EVAL_METHOD__' will be defined to 16
+   (if compiling with +fp16 support) so it can't be used by math.h to
+   define float_t and double_t.  For values of '__FLT_EVAL_METHOD__'
+   other than 0, 1, 2 the definition of float_t and double_t is
+   implementation-defined.  */
+#define __DOUBLE_TYPE double
+#define __FLOAT_TYPE float
 #endif
 
 #if defined (__aarch64__)
@@ -102,6 +109,13 @@
 #ifdef __ARM_FP
 # define _SUPPORTS_ERREXCEPT
 #endif
+/* As per ISO/IEC TS 18661 '__FLT_EVAL_METHOD__' will be defined to 16
+   (if compiling with +fp16 support) so it can't be used by math.h to
+   define float_t and double_t.  For values of '__FLT_EVAL_METHOD__'
+   other than 0, 1, 2 the definition of float_t and double_t is
+   implementation-defined.  */
+#define __DOUBLE_TYPE double
+#define __FLOAT_TYPE float
 #endif
 
 #ifdef __epiphany__
@@ -199,7 +213,11 @@
 #endif
 
 #ifdef __riscv
+#if defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+#define __IEEE_BIG_ENDIAN
+#else
 #define __IEEE_LITTLE_ENDIAN
+#endif
 #ifdef __riscv_flen
 # define _SUPPORTS_ERREXCEPT
 #endif

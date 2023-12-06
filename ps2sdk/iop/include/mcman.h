@@ -29,21 +29,21 @@ typedef struct _sceMcTblGetDir {	// size = 64
 	u16 Reserve1;			// 22
 	u32 Reserve2;			// 24
 	u32 PdaAplNo;			// 28
-	unsigned char EntryName[32];	// 32
+	char EntryName[32];	// 32
 } sceMcTblGetDir;
 
 int  McDetectCard(int port, int slot);
-int  McOpen(int port, int slot, char *filename, int flags);
+int  McOpen(int port, int slot, const char *filename, int flags);
 int  McClose(int fd);
 int  McRead(int fd, void *buf, int length);
 int  McWrite(int fd, void *buf, int length);
 int  McSeek(int fd, int offset, int origin);
 int  McFormat(int port, int slot);
-int  McGetDir(int port, int slot, char *dirname, int flags, int maxent, sceMcTblGetDir *info);
-int  McDelete(int port, int slot, char *filename, int flags);
+int  McGetDir(int port, int slot, const char *dirname, int flags, int maxent, sceMcTblGetDir *info);
+int  McDelete(int port, int slot, const char *filename, int flags);
 int  McFlush(int fd);
-int  McChDir(int port, int slot, char *newdir, char *currentdir);
-int  McSetFileInfo(int port, int slot, char *filename, sceMcTblGetDir *info, int flags);
+int  McChDir(int port, int slot, const char *newdir, char *currentdir);
+int  McSetFileInfo(int port, int slot, const char *filename, sceMcTblGetDir *info, int flags);
 int  McEraseBlock(int port, int block, void **pagebuf, void *eccbuf);	//MCMAN v1.1 does not have a slot argument
 int  McReadPage(int port, int slot, int page, void *buf);
 int  McWritePage(int port, int slot, int page, void *pagebuf, void *eccbuf);
@@ -60,17 +60,19 @@ void McSetPS1CardFlag(int flag);
 int  McEraseBlock2(int port, int slot, int block, void **pagebuf, void *eccbuf);
 int  McDetectCard2(int port, int slot);
 int  McGetFormat(int port, int slot);
-int  McGetEntSpace(int port, int slot, char *dirname);
+int  McGetEntSpace(int port, int slot, const char *dirname);
 int  McReplaceBadBlock(void);
 int  McCloseAll(void);
+#ifdef _IOP
 struct irx_id *McGetModuleInfo(void);
+#endif
 int  McGetCardSpec(int port, int slot, s16 *pagesize, u16 *blocksize, int *cardsize, u8 *flags);
 int  McGetFATentry(int port, int slot, int fat_index, int *fat_entry);
 int  McCheckBlock(int port, int slot, int block);
 int  McSetFATentry(int port, int slot, int fat_index, int fat_entry);
 int  McReadDirEntry(int port, int slot, int cluster, int fsindex, McFsEntry **pfse);
 void Mc1stCacheEntSetWrFlagOff(void);
-int McCreateDirentry(int port, int slot, int parent_cluster, int num_entries, int cluster, sceMcStDateTime *ctime);
+int McCreateDirentry(int port, int slot, int parent_cluster, int num_entries, int cluster, const sceMcStDateTime *ctime);
 int McReadCluster(int port, int slot, int cluster, McCacheEntry **pmce);
 int McFlushCache(int port, int slot);
 int McSetDirEntryState(int port, int slot, int cluster, int fsindex, int flags);

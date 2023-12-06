@@ -221,12 +221,12 @@ extern int flock (int, int);
 #endif
 #if __GNU_VISIBLE
 #include <sys/time.h>
-extern int futimesat (int, const char *, const struct timeval *);
+extern int futimesat (int, const char *, const struct timeval [2]);
 #endif
 
 /* Provide _<systemcall> prototypes for functions provided by some versions
    of newlib.  */
-#ifdef _COMPILING_NEWLIB
+#ifdef _LIBC
 extern int _open (const char *, int, ...);
 extern int _fcntl (int, int, ...);
 #ifdef __LARGE64_FILES

@@ -11,6 +11,7 @@
 
 #include <kernel.h>
 #include <stdlib.h>
+#include <malloc.h>
 #include <tamtypes.h>
 #include <math3d.h>
 
@@ -105,7 +106,6 @@ int render(framebuffer_t *frame, zbuffer_t *z)
 	// The data packets for double buffering dma sends.
 	packet_t *packets[2];
 	packet_t *current;
-	qword_t *q;
 	qword_t *dmatag;
 
 	packets[0] = packet_init(100,PACKET_NORMAL);
@@ -143,6 +143,7 @@ int render(framebuffer_t *frame, zbuffer_t *z)
 	// The main loop...
 	for (;;)
 	{
+		qword_t *q;
 
 		current = packets[context];
 
@@ -219,7 +220,7 @@ int render(framebuffer_t *frame, zbuffer_t *z)
 
 }
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
 
 	// The buffers to be used.
