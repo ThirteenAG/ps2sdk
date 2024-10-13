@@ -18,6 +18,10 @@
 
 #include <types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef NULL
 #define NULL	((void *)0)
 #endif
@@ -30,50 +34,38 @@
 #define KSEG1ADDR(a)	((__typeof__(a))(((u32)(a) & 0x1fffffff) | KSEG1))
 
 #if !defined(USE_GP_REGISTER)
-#if __GNUC__ > 3
-#define USE_GP_REGISTER 0
-#else
 #define USE_GP_REGISTER 1
 #endif
-#endif
 
-#if USE_GP_REGISTER
+static __inline__ void SetGP(void *gp)
+{
+	register void *gpReg __asm__("gp");
+
+	gpReg = gp;
+	__asm__ __volatile__(" " ::"r"(gpReg));
+}
+
+extern void *_gp;
+
+static __inline__ void *GetGP(void)
+{
+	register void *gpReg __asm__("gp");
+
+	__asm__ __volatile__(" " : "=r"(gpReg));
+	return gpReg;
+}
+
 static __inline__ void *ChangeGP(void *gp)
 {
 	void *OldGP;
 
-	__asm__ volatile(	"move %0, $gp\n"
-				"move $gp, %1"
-				: "=&r"(OldGP)
-				: "r"(gp)
-				: "gp", "memory");
+	OldGP = GetGP();
+	SetGP(gp);
 
 	return OldGP;
 }
 
-static __inline__ void SetGP(void *gp)
-{
-	__asm__ volatile(	"move $gp, %0"
-				:
-				: "r"(gp)
-				: "gp", "memory");
-}
-
-extern void *_gp;
 #define SetModuleGP()	ChangeGP(&_gp)
-
-static __inline__ void *GetGP(void)
-{
-	void *gp;
-
-	__asm__ volatile(	"move %0, $gp"
-				: "=r"(gp)
-				:
-				: "memory");
-
-	return gp;
-}
-#endif
 
 static inline void *iop_memcpy(void *dest, const void *src, int size)
 {
@@ -83,5 +75,9 @@ static inline void *iop_memcpy(void *dest, const void *src, int size)
 		*d++ = *s++;
 	return dest;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __DEFS_H__ */

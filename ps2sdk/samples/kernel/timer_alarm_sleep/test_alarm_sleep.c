@@ -12,15 +12,14 @@
 #include <kernel.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <timer.h>
-#include <timer_alarm.h>
+#include <delaythread.h>
 
 volatile int flag = 0;
 
 int main(int argc, char *argv[])
 {
     while (1) {
-        ThreadWaitClock(MSec2TimerBusClock(350));
+        DelayThread(350 * 1000);
         printf("Hello there, 350ms tick!\n");
     }
 

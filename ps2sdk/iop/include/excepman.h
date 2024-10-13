@@ -19,6 +19,10 @@
 #include <types.h>
 #include <irx.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* From any r3000's cop0 documentation */
 /** External Interrupt */
 #define IOP_EXCEPTION_INT	0
@@ -55,7 +59,7 @@
 
 typedef struct _exception_handler_struct_t
 {
-	void* next;
+	struct _exception_handler_struct_t* next;
 	int info;
 	u32 funccode[];
 } exception_handler_struct_t;
@@ -65,11 +69,11 @@ typedef exception_handler_struct_t* exception_handler_t;
 void* GetExHandlersTable();
 
 /** will call RegisterPriorityExceptionHandler with prio = 2 */
-int RegisterExceptionHandler(int exception, exception_handler_t);
-int RegisterPriorityExceptionHandler(int exception, int priority, exception_handler_t);
-int RegisterDefaultExceptionHandler(exception_handler_t);
-int ReleaseExceptionHandler(int exception, exception_handler_t);
-int ReleaseDefaultExceptionHandler(exception_handler_t);
+int RegisterExceptionHandler(int exception, exception_handler_t handler);
+int RegisterPriorityExceptionHandler(int exception, int priority, exception_handler_t handler);
+int RegisterDefaultExceptionHandler(exception_handler_t handler);
+int ReleaseExceptionHandler(int exception, exception_handler_t handler);
+int ReleaseDefaultExceptionHandler(exception_handler_t handler);
 
 #define excepman_IMPORTS_start DECLARE_IMPORT_TABLE(excepman, 1, 2)
 #define excepman_IMPORTS_end END_IMPORT_TABLE
@@ -80,5 +84,9 @@ int ReleaseDefaultExceptionHandler(exception_handler_t);
 #define I_RegisterDefaultExceptionHandler DECLARE_IMPORT(6, RegisterDefaultExceptionHandler)
 #define I_ReleaseExceptionHandler DECLARE_IMPORT(7, ReleaseExceptionHandler)
 #define I_ReleaseDefaultExceptionHandler DECLARE_IMPORT(8, ReleaseDefaultExceptionHandler)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __EXCEPMAN_H__ */

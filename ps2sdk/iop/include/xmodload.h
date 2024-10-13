@@ -18,6 +18,10 @@
 
 #include <modload.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int GetModuleIdList(int *readbuf, int readbufsize, int *modulecount);
 
 typedef struct {
@@ -34,7 +38,7 @@ typedef struct {
 	u32 lreserve[2];
 } ModuleStatus;
 
-int ReferModuleStatus(int, ModuleStatus *status);
+int ReferModuleStatus(int modid, ModuleStatus *status);
 int GetModuleIdListByName(const char *name, int *readbuf, int readbufsize, int *modulecount);
 
 typedef struct {
@@ -66,11 +70,11 @@ int SearchModuleByName(const char *name);
 int SearchModuleByAddress(const void *addr);
 int SelfStopModule(int arglen, const char *args, int *result);
 void SelfUnloadModule(void);
-void *AllocLoadMemory(int type, unsigned long size, void *addr);
+void *AllocLoadMemory(int type, unsigned int size, void *addr);
 int FreeLoadMemory(void *area);
 int SetModuleFlags(int modid, int flag);
 
-#define xmodload_IMPORTS_start DECLARE_IMPORT_TABLE(modload, 1, 1)
+#define xmodload_IMPORTS_start DECLARE_IMPORT_TABLE(modload, 1, 7)
 #define xmodload_IMPORTS_end END_IMPORT_TABLE
 
 #define I_GetModuleIdList DECLARE_IMPORT(16, GetModuleIdList)
@@ -81,10 +85,14 @@ int SetModuleFlags(int modid, int flag);
 #define I_UnloadModule DECLARE_IMPORT(21, UnloadModule)
 #define I_SearchModuleByName DECLARE_IMPORT(22, SearchModuleByName)
 #define I_SearchModuleByAddress DECLARE_IMPORT(23, SearchModuleByAddress)
-#define I_SelfStopModule DECLARE_IMPORT(24, SelfStopModule)
-#define I_SelfUnloadModule DECLARE_IMPORT(25, SelfUnloadModule)
-#define I_AllocLoadMemory DECLARE_IMPORT(26, AllocLoadMemory)
-#define I_FreeLoadMemory DECLARE_IMPORT(27, FreeLoadMemory)
-#define I_SetModuleFlags DECLARE_IMPORT(28, SetModuleFlags)
+#define I_SelfStopModule DECLARE_IMPORT(26, SelfStopModule)
+#define I_SelfUnloadModule DECLARE_IMPORT(27, SelfUnloadModule)
+#define I_AllocLoadMemory DECLARE_IMPORT(28, AllocLoadMemory)
+#define I_FreeLoadMemory DECLARE_IMPORT(29, FreeLoadMemory)
+#define I_SetModuleFlags DECLARE_IMPORT(30, SetModuleFlags)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __XMODLOAD_H__ */

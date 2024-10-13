@@ -49,6 +49,30 @@ SECTIONS
     * ( .data.* )
     CONSTRUCTORS
   }
+  PROVIDE (__CTOR_LIST__ = .);
+  PROVIDE (___CTOR_LIST__ = .);
+  .ctors   :
+  {
+    LONG (0xffffffff) ;
+    KEEP (*crtbegin.o(.ctors))
+    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))
+    KEEP (*(SORT(.ctors.*)))
+    KEEP (*(.ctors))
+  }
+  PROVIDE (__CTOR_END__ = .);
+  PROVIDE (___CTOR_END__ = .);
+  PROVIDE (__DTOR_LIST__ = .);
+  PROVIDE (___DTOR_LIST__ = .);
+   .dtors         :
+  {
+    LONG (0xffffffff) ;
+    KEEP (*crtbegin.o(.dtors))
+    KEEP (*(EXCLUDE_FILE (*crtend.o) .dtors))
+    KEEP (*(SORT(.dtors.*)))
+    KEEP (*(.dtors))
+  }
+  PROVIDE (__DTOR_END__ = .);
+  PROVIDE (___DTOR_END__ = .);
   . = ALIGN(16) ;
   _gp = . + 0x8000 ;
   .sdata : {

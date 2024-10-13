@@ -369,8 +369,7 @@
 /* nano version of malloc is used. */
 /* #undef _NANO_MALLOC */
 
-/* "The newlib version in string format." */
-#define _NEWLIB_VERSION "4.3.0"
+/* The newlib version in string format. */
 
 /* Verify _REENT_CHECK macros allocate memory successfully. */
 #define _REENT_CHECK_VERIFY 1
@@ -383,7 +382,7 @@
 
 /* Enable C99 formats support (e.g. %a, %zu, ...) in IO functions like
    printf/scanf. */
-/* #undef _WANT_IO_C99_FORMATS */
+#define _WANT_IO_C99_FORMATS 1
 
 /* Define to enable long double type support in IO functions like
    printf/scanf. */
@@ -419,13 +418,10 @@
 /* Define if wide char orientation is supported. */
 #define _WIDE_ORIENT 1
 
-/* "The newlib minor version number." */
-#define __NEWLIB_MINOR__ 3
+/* The newlib minor version number. */
 
-/* "The newlib patch level." */
-#define __NEWLIB_PATCHLEVEL__ 0
+/* The newlib patch level. */
 
-/* "The newlib major version number." */
-#define __NEWLIB__ 4
+/* The newlib major version number. */
 
 #endif /* !__NEWLIB_H__ */

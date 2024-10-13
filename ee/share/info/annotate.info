@@ -1,7 +1,7 @@
-This is annotate.info, produced by makeinfo version 7.1 from
+This is annotate.info, produced by makeinfo version 7.1.1 from
 annotate.texinfo.
 
-Copyright © 1994-2022 Free Software Foundation, Inc.
+Copyright © 1994-2024 Free Software Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -16,7 +16,7 @@ END-INFO-DIR-ENTRY
 
    This file documents GDB's obsolete annotations.
 
-   Copyright © 1994-2022 Free Software Foundation, Inc.
+   Copyright © 1994-2024 Free Software Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -1173,22 +1173,22 @@ their use in free software.
 
 
 Tag Table:
-Node: Top1164
-Node: Annotations Overview2334
-Node: Limitations4169
-Node: Migrating to GDB/MI6758
-Node: Server Prefix7145
-Node: Value Annotations7803
-Node: Frame Annotations11025
-Node: Displays14970
-Node: Prompting16005
-Node: Errors17552
-Node: Breakpoint Info18454
-Node: Invalidation19683
-Node: Annotations for Running20176
-Node: Source Annotations21745
-Node: Multi-threaded Apps22703
-Node: GNU Free Documentation License23579
+Node: Top1166
+Node: Annotations Overview2336
+Node: Limitations4171
+Node: Migrating to GDB/MI6760
+Node: Server Prefix7147
+Node: Value Annotations7805
+Node: Frame Annotations11027
+Node: Displays14972
+Node: Prompting16007
+Node: Errors17554
+Node: Breakpoint Info18456
+Node: Invalidation19685
+Node: Annotations for Running20178
+Node: Source Annotations21747
+Node: Multi-threaded Apps22705
+Node: GNU Free Documentation License23581
 
 End Tag Table
 

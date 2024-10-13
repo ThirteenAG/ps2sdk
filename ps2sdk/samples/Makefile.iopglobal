@@ -30,10 +30,13 @@ IOP_OPTFLAGS ?= -Os
 # Warning compiler flags
 IOP_WARNFLAGS ?= -Wall
 
+# Debug information flags
+IOP_DBGINFOFLAGS ?= -gdwarf-2 -gz
+
 # C compiler flags
 # -fno-builtin is required to prevent the GCC built-in functions from being included,
 #   for finer-grained control over what goes into each IRX.
-IOP_CFLAGS := -D_IOP -fno-builtin -G0 $(IOP_OPTFLAGS) $(IOP_WARNFLAGS) $(IOP_INCS) $(IOP_CFLAGS)
+IOP_CFLAGS := -D_IOP -fno-builtin -G0 $(IOP_OPTFLAGS) $(IOP_WARNFLAGS) $(IOP_DBGINFOFLAGS) $(IOP_INCS) $(IOP_CFLAGS)
 # linker flags
 IOP_LDFLAGS := -nostdlib -s $(IOP_LDFLAGS)
 
@@ -72,7 +75,7 @@ IOP_OBJS := $(IOP_OBJS:%=$(IOP_OBJS_DIR)%)
 IOP_C_COMPILE = $(IOP_CC) $(IOP_CFLAGS)
 
 # Command for ensuring the output directory for the rule exists.
-DIR_GUARD = @$(MKDIR) -p $(@D)
+DIR_GUARD = #@$(MKDIR) -p $(@D)
 
 $(IOP_OBJS_DIR)%.o: $(IOP_SRC_DIR)%.c
 	$(DIR_GUARD)
@@ -91,7 +94,7 @@ $(IOP_OBJS_DIR)%.o: $(IOP_SRC_DIR)%.s
 # Rules to build imports.lst.
 $(IOP_OBJS_DIR)build-imports.c: $(IOP_SRC_DIR)imports.lst
 	$(DIR_GUARD)
-	$(ECHO) "#include \"irx_imports.h\"" > $@
+	$(PRINTF) '%s\n' "#include \"irx_imports.h\"" > $@
 	cat $< >> $@
 
 $(IOP_OBJS_DIR)imports.o: $(IOP_OBJS_DIR)build-imports.c
@@ -100,7 +103,7 @@ $(IOP_OBJS_DIR)imports.o: $(IOP_OBJS_DIR)build-imports.c
 
 # Rules to build exports.tab.
 $(IOP_OBJS_DIR)build-exports.c: $(IOP_SRC_DIR)exports.tab
-	$(ECHO) "#include \"irx.h\"" > $@
+	$(PRINTF) '%s\n' "#include \"irx.h\"" > $@
 	cat $< >> $@
 
 $(IOP_OBJS_DIR)exports.o: $(IOP_OBJS_DIR)build-exports.c

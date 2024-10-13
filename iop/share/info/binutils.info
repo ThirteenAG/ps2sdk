@@ -1,4 +1,4 @@
-This is binutils.info, produced by makeinfo version 7.1 from
+This is binutils.info, produced by makeinfo version 7.1.1 from
 binutils.texi.
 
 Copyright © 1991-2020 Free Software Foundation, Inc.
@@ -5725,36 +5725,36 @@ Binutils Index
 
 
 Tag Table:
-Node: Top1833
-Node: ar3552
-Node: ar cmdline6789
-Node: ar scripts19943
-Node: nm25941
-Node: objcopy39132
-Node: objdump80875
-Node: ranlib115488
-Node: size117183
-Node: strings121364
-Node: strip125936
-Node: c++filt135781
-Ref: c++filt-Footnote-1141827
-Node: addr2line141941
-Node: windmc147868
-Node: windres151795
-Node: dlltool158570
-Node: def file format172139
-Node: readelf174889
-Node: elfedit189163
-Node: Common Options192239
-Node: Selecting the Target System193285
-Node: Target Selection194225
-Node: Architecture Selection196346
-Node: debuginfod197222
-Node: Reporting Bugs198001
-Node: Bug Criteria198763
-Node: Bug Reporting199322
-Node: GNU Free Documentation License206270
-Node: Binutils Index231433
+Node: Top1835
+Node: ar3554
+Node: ar cmdline6791
+Node: ar scripts19945
+Node: nm25943
+Node: objcopy39134
+Node: objdump80877
+Node: ranlib115490
+Node: size117185
+Node: strings121366
+Node: strip125938
+Node: c++filt135783
+Ref: c++filt-Footnote-1141829
+Node: addr2line141943
+Node: windmc147870
+Node: windres151797
+Node: dlltool158572
+Node: def file format172141
+Node: readelf174891
+Node: elfedit189165
+Node: Common Options192241
+Node: Selecting the Target System193287
+Node: Target Selection194227
+Node: Architecture Selection196348
+Node: debuginfod197224
+Node: Reporting Bugs198003
+Node: Bug Criteria198765
+Node: Bug Reporting199324
+Node: GNU Free Documentation License206272
+Node: Binutils Index231435
 
 End Tag Table
 

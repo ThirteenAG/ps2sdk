@@ -19,6 +19,10 @@
 #include <types.h>
 #include <irx.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct loadfile_elf32_ehdr_
 {
 	u8 e_ident[16];
@@ -117,7 +121,7 @@ typedef void *(*SecrDiskBootFile_callback_t)(void *buffer);
 typedef void (*SetLoadfileCallbacks_callback_t)(SetLoadfileCallbacks_struct_t *callbackinfo);
 typedef int (*CheckKelfPath_callback_t)(const char *filename, int *port, int *slot);
 
-void *GetModloadInternalData(void **pInternalData);
+void GetModloadInternalData(void **pInternalData);
 
 int ReBootStart(const char *command, unsigned int flags);
 int LoadModuleAddress(const char *name, void *addr, int offset);
@@ -148,5 +152,9 @@ int IsIllegalBootDevice(const char *path);
 #define I_SetCheckKelfPathCallback DECLARE_IMPORT(13, SetCheckKelfPathCallback)
 #define I_GetLoadfileCallbacks DECLARE_IMPORT(14, GetLoadfileCallbacks)
 #define I_IsIllegalBootDevice DECLARE_IMPORT(15, IsIllegalBootDevice)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __MODLOAD_H__ */
