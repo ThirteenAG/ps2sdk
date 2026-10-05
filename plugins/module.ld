@@ -4,7 +4,7 @@ SECTIONS
   .text 0 : { *(.text .text.* .gnu.linkonce.t.*) }
   .rodata 0 : { *(.rodata .rodata.* .rdata .gnu.linkonce.r.*) }
   .data 0 : { _gp = .; *(.data .data.* .gnu.linkonce.d.*) }
-  .init_array 0 : {
+  .init_array 0 : ALIGN(4) {
     __init_array_start = .;
     KEEP(*(SORT_BY_INIT_PRIORITY(.init_array.*)))
     KEEP(*(.init_array))
@@ -12,7 +12,7 @@ SECTIONS
     KEEP(*(.ctors))
     __init_array_end = .;
   }
-  .fini_array 0 : {
+  .fini_array 0 : ALIGN(4) {
     __fini_array_start = .;
     KEEP(*(SORT_BY_INIT_PRIORITY(.fini_array.*)))
     KEEP(*(.fini_array))
