@@ -6,6 +6,9 @@ param(
     [string[]]$Defines = @(),
     [string[]]$IncludeDirectories = @(),
     [string[]]$LinkOptions = @(),
+    [string[]]$CompileOptions = @(),
+    [string[]]$CFlags = @(),
+    [string[]]$CxxFlags = @(),
     [switch]$NoRuntime,
     [switch]$Clean
 )
@@ -24,9 +27,15 @@ if ($Project) {
     $Defines += @($config.defines)
     $IncludeDirectories += @($config.includes | ForEach-Object { [IO.Path]::GetFullPath((Join-Path $projectDirectory $_)) })
     $LinkOptions += @($config.link_options)
+    $CompileOptions += @($config.cflags)
+    $CFlags += @($config.c_flags)
+    $CxxFlags += @($config.cxx_flags)
 }
 if (!$Sources.Count -or !$Output) { throw 'Supply a module.json project or Sources and Output.' }
 $LinkOptions = @($LinkOptions | Where-Object { $_ })
+$CompileOptions = @($CompileOptions | Where-Object { $_ })
+$CFlags = @($CFlags | Where-Object { $_ })
+$CxxFlags = @($CxxFlags | Where-Object { $_ })
 $outputPath = [IO.Path]::GetFullPath($Output)
 if ([IO.Path]::GetExtension($outputPath) -ne '.elf') { throw 'Module output must be an .elf file.' }
 $objectDirectory = $outputPath + '.objects'
@@ -64,14 +73,16 @@ try {
         $sourcePath = (Resolve-Path -LiteralPath $source).Path
         $extension = [IO.Path]::GetExtension($sourcePath)
         $compiler = $gcc
-        $compileFlags = $flags
+        $compileFlags = $flags + $CompileOptions
         # GCC can fold malloc+memset into calloc. These are the allocator's
         # own definitions, so that substitution would recursively call itself.
         if ($sourcePath -eq (Join-Path $PSScriptRoot 'module-runtime.c')) { $compileFlags += '-fno-builtin' }
         if ($extension -in @('.cpp', '.cc', '.cxx')) {
             $compiler = $gxx
-            $compileFlags += @('-std=gnu++17', '-fno-exceptions', '-fno-rtti', '-fno-threadsafe-statics')
-        } elseif ($extension -notin @('.c', '.s', '.S')) { throw "Unsupported module source: $sourcePath" }
+            $compileFlags += @('-std=gnu++17', '-fno-exceptions', '-fno-rtti', '-fno-threadsafe-statics') + $CxxFlags
+        } elseif ($extension -eq '.c') {
+            $compileFlags += $CFlags
+        } elseif ($extension -notin @('.s', '.S')) { throw "Unsupported module source: $sourcePath" }
         $object = Join-Path $objectDirectory ($index.ToString() + '-' + [IO.Path]::GetFileNameWithoutExtension($sourcePath) + '.o')
         # Forward slashes survive both PowerShell's Windows argument quoting
         # and the toolchain driver's subprocess quoting, including spaces.

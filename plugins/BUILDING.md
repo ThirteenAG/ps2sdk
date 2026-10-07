@@ -5,6 +5,13 @@ the existing Windows compiler and SDK archives, supplies an injected-module
 runtime, and does not run the standalone console CRT. See the injector repository's
 `docs/guest-modules.md` for the ABI and supported runtime services.
 
+JSON manifests accept `sources`, `output`, `defines`, `includes`, `link_options`,
+`c_flags` (C sources) and `cxx_flags` (C++ sources). The legacy `cflags` field
+applies to both languages. The equivalent command-line arguments are `CFlags`,
+`CxxFlags` and `CompileOptions`. User options follow the default compiler flags.
+Mid-hook callbacks should use `-ffp-contract=off` unless they explicitly preserve
+the EE scalar accumulator; otherwise GCC may introduce fused ACC operations.
+
 ```powershell
 ./plugins/build-module.ps1 -Project path/to/module.json
 ./plugins/build-module.ps1 -Project path/to/module.json -Clean

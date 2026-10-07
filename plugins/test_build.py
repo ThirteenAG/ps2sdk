@@ -10,6 +10,25 @@ BUILDER = Path(__file__).with_name("build-module.ps1")
 
 
 class ModuleBuild(unittest.TestCase):
+    def test_language_compile_flags(self):
+        with tempfile.TemporaryDirectory(prefix="ps2 language flags ") as directory:
+            root = Path(directory)
+            (root / "main.c").write_text(
+                '#if !defined(COMMON_FLAG) || !defined(C_FLAG) || defined(CPP_FLAG)\n'
+                '#error Wrong C flags\n#endif\n'
+                'int CompatibleCRCList[] = {0x4F32A11F};\n'
+                'extern void probe(void); void init(void) {probe();}\n')
+            (root / "probe.cpp").write_text(
+                '#if !defined(COMMON_FLAG) || !defined(CPP_FLAG) || defined(C_FLAG)\n'
+                '#error Wrong C++ flags\n#endif\n'
+                'extern "C" void probe(void) {}\n')
+            project = root / "module.json"
+            project.write_text(json.dumps(dict(sources=["main.c", "probe.cpp"], output="plugin.elf",
+                cflags=["-DCOMMON_FLAG"], c_flags=["-DC_FLAG"], cxx_flags=["-DCPP_FLAG", "-ffp-contract=off"])))
+            result = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File",
+                                     str(BUILDER), "-Project", str(project)], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_build_failure_preserves_binary_and_map(self):
         with tempfile.TemporaryDirectory(prefix="ps2 module ") as directory:
             root = Path(directory)
